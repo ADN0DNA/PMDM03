@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Colores turquesa primarios -->
+    <color name="turquoise_primary">#00CED1</color>
+    <color name="turquoise_light">#7FFFD4</color>
+    <color name="turquoise_dark">#008B8B</color>
+
+    <!-- Colores teal secundarios -->
+    <color name="teal_secondary">#20B2AA</color>
+    <color name="teal_light">#B2DFDB</color>
+    <color name="teal_dark">#00695C</color>
+
+    <!-- Colores cyan terciarios -->
+    <color name="cyan_tertiary">#00BCD4</color>
+    <color name="cyan_light">#B2EBF2</color>
+    <color name="cyan_dark">#0097A7</color>
+
+    <!-- Colores base -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="surface_light">#F5F5F5</color>
+    <color name="surface_variant">#E0F2F1</color>
+    <color name="on_surface_variant">#004D40</color>
+    <color name="error">#B00020</color>
 </resources>

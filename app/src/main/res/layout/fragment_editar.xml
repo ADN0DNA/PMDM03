@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonGoBack"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/arrow_back"
+        app:iconSize="@dimen/size_big"
+        app:iconTint="@color/teal_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        android:textSize="@dimen/text_size_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroupClass"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutNumber"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:hint="@string/item_number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/radioGroupClass"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/buttonGoBack"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+        app:layout_constraintVertical_bias="0.04">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="6"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroupClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutNumber"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayoutNumber">
+
+        <RadioButton
+            android:id="@+id/radioButtonSafe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/safe" />
+
+        <RadioButton
+            android:id="@+id/radioButtonEuclid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/euclid" />
+
+        <RadioButton
+            android:id="@+id/radioButtonKeter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/keter" />
+
+    </RadioGroup>
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:text="@string/favorite"
+        app:thumbTint="@color/teal_dark"
+        app:trackTint="@color/teal_light"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutAlias"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutAlias"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayoutAlias" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutAlias"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:hint="@string/alias"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutNumber"
+        app:layout_constraintEnd_toStartOf="@id/switchFavorite"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNumber"
+        app:layout_constraintBottom_toTopOf="@+id/textViewClassification">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextAlias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="9"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/textViewClassification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="@string/classification"
+        android:textSize="@dimen/text_size_subtitle"
+        app:layout_constraintEnd_toEndOf="@+id/switchFavorite"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutAlias"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutAlias"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupClassificationRestricted" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupClassificationRestricted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/textViewClassification"
+        app:layout_constraintStart_toStartOf="@+id/textViewClassification"
+        app:layout_constraintTop_toBottomOf="@+id/textViewClassification"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupClassificationSecret">
+
+        <RadioButton
+            android:id="@+id/radioButtonUnrestricted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unrestricted" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRestricted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restricted" />
+
+        <RadioButton
+            android:id="@+id/radioButtonConfidential"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confidential" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radioGroupClassificationSecret"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/radioGroupClassificationRestricted"
+        app:layout_constraintStart_toStartOf="@+id/radioGroupClassificationRestricted"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupClassificationRestricted"
+        app:layout_constraintBottom_toTopOf="@id/textViewDescription">
+
+        <RadioButton
+            android:id="@+id/radioButtonSecret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/secret" />
+
+        <RadioButton
+            android:id="@+id/radioButtonTopSecret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/top_secret" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="@string/description"
+        android:textSize="@dimen/text_size_subtitle"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayoutDescription"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroupClassificationRestricted"
+        app:layout_constraintStart_toStartOf="@+id/radioGroupClassificationRestricted"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupClassificationSecret" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroupClassificationRestricted"
+        app:layout_constraintStart_toStartOf="@+id/radioGroupClassificationRestricted"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:ems="100"
+            android:inputType="textMultiLine" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/buttonsTopGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:id="@+id/buttonActualizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/actualizar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonBorrar"
+        app:layout_constraintTop_toTopOf="@+id/buttonsTopGuideLine" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:id="@+id/buttonBorrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/borrar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonActualizar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonsTopGuideLine" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
