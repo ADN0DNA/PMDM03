@@ -8,6 +8,5 @@ data class Scp(
     val favorite: Boolean = false,
     val classification: Classification = Classification.UNRESTRICTED,
     val description: String = "",
-    //TODO eliminar ambos checkboxes
 )
 
