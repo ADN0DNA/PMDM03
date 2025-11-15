@@ -1,6 +1,6 @@
-package com.example.myfragments.ui.add
+package com.example.myfragments.ui.scps.add
 
-data class AddState(
+data class AddScpState(
     val number: Int = 0,
     val alias: String = "",
     val description: String = "",
