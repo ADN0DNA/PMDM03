@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_small"
+    app:cardElevation="@dimen/size_small"
+    app:cardCornerRadius="@dimen/size_small">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_large">
+
+
+    <TextView
+        android:id="@+id/textViewItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/item_number"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textViewName"
+        app:layout_constraintEnd_toStartOf="@id/textViewSite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textStyle="bold"
+        android:textColor="@color/teal_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewItem"
+        app:layout_constraintTop_toTopOf="@+id/textViewItem"
+        tools:text="19" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/alias"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textColor="@color/teal_dark"
+        app:layout_constraintEnd_toEndOf="@+id/textViewItem"
+        app:layout_constraintStart_toStartOf="@+id/textViewItem"
+        app:layout_constraintTop_toBottomOf="@+id/textViewItem" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
