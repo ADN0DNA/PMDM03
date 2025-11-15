@@ -1,4 +1,4 @@
-package com.example.myfragments.ui.editar
+package com.example.myfragments.ui.scps.editar
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditarViewModel @Inject constructor(
+class EditarScpViewModel @Inject constructor(
     private val addScp: AddScpUseCase,
     private val borrarScp: BorrarScpUseCase,
     private val verScp: VerScpUseCase,
@@ -24,8 +24,8 @@ class EditarViewModel @Inject constructor(
     private val repositorioSites: RepositorioSites
 ) : ViewModel() {
 
-    private val _state = MutableLiveData(EditarState())
-    val state: LiveData<EditarState> get() = _state
+    private val _state = MutableLiveData(EditarScpState())
+    val state: LiveData<EditarScpState> get() = _state
 
     private var currentId: Int = 0
 

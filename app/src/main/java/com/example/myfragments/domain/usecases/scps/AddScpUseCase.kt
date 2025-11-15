@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AddScpUseCase @Inject constructor(
     private val repo: RepositorioScps
 ) {
-    operator fun invoke(scp: Scp): Scp {
+    suspend operator fun invoke(scp: Scp): Scp {
         return repo.addScp(scp)
     }
 }

@@ -1,36 +1,35 @@
-package com.example.myfragments.ui.editar
+package com.example.myfragments.ui.scps.add
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.myfragments.R
-import com.example.myfragments.databinding.FragmentEditarBinding
-import com.example.myfragments.domain.modelo.*
+import com.example.myfragments.databinding.FragmentScpsAddBinding
+import com.example.myfragments.domain.modelo.Clase
+import com.example.myfragments.domain.modelo.Classification
+import com.example.myfragments.domain.modelo.Scp
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentEditar : Fragment() {
+class FragmentScpsAdd : Fragment() {
 
-    private var _binding: FragmentEditarBinding? = null
+    private var _binding: FragmentScpsAddBinding? = null
     private val binding get() = _binding!!
 
-    private val args: FragmentEditarArgs by navArgs()
-
-    private val viewModel: EditarViewModel by viewModels()
+    private val viewModel: AddScpViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentEditarBinding.inflate(inflater, container, false)
+        _binding = FragmentScpsAddBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,17 +37,9 @@ class FragmentEditar : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRadioGroups()
+        clearFields()
         setupObservers()
         setupListeners()
-
-        // Cargar SCP con el ID recibido desde navegación
-        // Si el ID es -1 no es válido
-        if (args.scpId != -1) {
-            viewModel.cargar(args.scpId)
-        } else {
-            // Navegar de vuelta si no hay un ID válido
-            findNavController().navigateUp()
-        }
     }
 
     private fun setupRadioGroups() {
@@ -78,65 +69,35 @@ class FragmentEditar : Fragment() {
         secretGroup.setOnCheckedChangeListener(secretListener)
     }
 
+    private fun clearFields() {
+        binding.editTextNumber.text?.clear()
+        binding.editTextAlias.text?.clear()
+        binding.editTextDescription.text?.clear()
+        binding.radioGroupClass.clearCheck()
+        binding.switchFavorite.isChecked = false
+        binding.radioGroupClassificationRestricted.clearCheck()
+        binding.radioGroupClassificationSecret.clearCheck()
+    }
+
     private fun setupObservers() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
-            updateUI(state)
+            binding.editTextNumber.setText(
+                if (state.number == 0) "" else state.number.toString()
+            )
+            binding.editTextAlias.setText(state.alias)
+            binding.editTextDescription.setText(state.description)
 
             state.mensaje?.let { mensaje ->
                 Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_SHORT).show()
                 viewModel.limpiarMensaje()
             }
-
-            if (state.cerrar) {
-                findNavController().navigateUp()
-            }
         }
-    }
-
-    private fun updateUI(state: EditarState) {
-        val scp = state.scp
-
-        // Actualizar campos
-        binding.editTextNumber.setText(scp.item.toString())
-        binding.editTextAlias.setText(scp.nombre)
-        binding.editTextDescription.setText(scp.description)
-
-        // Clase del SCP
-        when (scp.clase) {
-            Clase.SAFE -> binding.radioGroupClass.check(R.id.radioButtonSafe)
-            Clase.EUCLID -> binding.radioGroupClass.check(R.id.radioButtonEuclid)
-            Clase.KETER -> binding.radioGroupClass.check(R.id.radioButtonKeter)
-        }
-
-        // Favorito
-        binding.switchFavorite.isChecked = scp.favorite
-
-        // Clasificación
-        when (scp.classification) {
-            Classification.UNRESTRICTED ->
-                binding.radioGroupClassificationRestricted.check(R.id.radioButtonUnrestricted)
-            Classification.RESTRICTED ->
-                binding.radioGroupClassificationRestricted.check(R.id.radioButtonRestricted)
-            Classification.CONFIDENTIAL ->
-                binding.radioGroupClassificationRestricted.check(R.id.radioButtonConfidential)
-            Classification.SECRET ->
-                binding.radioGroupClassificationSecret.check(R.id.radioButtonSecret)
-            Classification.TOP_SECRET ->
-                binding.radioGroupClassificationSecret.check(R.id.radioButtonTopSecret)
-        }
-
-
     }
 
     private fun setupListeners() {
-        binding.buttonActualizar.setOnClickListener {
+        binding.buttonGuardar.setOnClickListener {
             val scp = buildScpFromInputs()
             viewModel.guardar(scp)
-            findNavController().navigateUp()
-        }
-
-        binding.buttonBorrar.setOnClickListener {
-            viewModel.borrar()
             findNavController().navigateUp()
         }
 
@@ -169,6 +130,7 @@ class FragmentEditar : Fragment() {
                 else -> Classification.UNRESTRICTED
             }
         }
+
 
         return Scp(
             item = item,

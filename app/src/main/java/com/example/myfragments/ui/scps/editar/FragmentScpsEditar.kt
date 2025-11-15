@@ -1,35 +1,40 @@
-package com.example.myfragments.ui.add
+package com.example.myfragments.ui.scps.editar
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfragments.R
-import com.example.myfragments.databinding.FragmentAddBinding
-import com.example.myfragments.domain.modelo.Clase
-import com.example.myfragments.domain.modelo.Classification
-import com.example.myfragments.domain.modelo.Scp
+import com.example.myfragments.databinding.FragmentScpsEditarBinding
+import com.example.myfragments.domain.modelo.*
+import com.example.myfragments.ui.SiteSelectorAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentAdd : Fragment() {
+class FragmentScpsEditar : Fragment() {
 
-    private var _binding: FragmentAddBinding? = null
+    private var _binding: FragmentScpsEditarBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AddViewModel by viewModels()
+    private val args: FragmentScpsEditarArgs by navArgs()
+
+    private val viewModel: EditarScpViewModel by viewModels()
+
+    private lateinit var siteSelectorAdapter: SiteSelectorAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddBinding.inflate(inflater, container, false)
+        _binding = FragmentScpsEditarBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,9 +42,29 @@ class FragmentAdd : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRadioGroups()
-        clearFields()
+        configureSitesRecyclerView()
         setupObservers()
         setupListeners()
+
+        // Cargar SCP con el ID recibido desde navegación
+        // Si el ID es -1 no es válido
+        if (args.scpId != -1) {
+            viewModel.cargar(args.scpId)
+        } else {
+            // Navegar de vuelta si no hay un ID válido
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun configureSitesRecyclerView() {
+        siteSelectorAdapter = SiteSelectorAdapter { site, isSelected ->
+            viewModel.toggleSiteAssignment(site, isSelected)
+        }
+
+        binding.recyclerViewSitesSelector.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = siteSelectorAdapter
+        }
     }
 
     private fun setupRadioGroups() {
@@ -69,35 +94,66 @@ class FragmentAdd : Fragment() {
         secretGroup.setOnCheckedChangeListener(secretListener)
     }
 
-    private fun clearFields() {
-        binding.editTextNumber.text?.clear()
-        binding.editTextAlias.text?.clear()
-        binding.editTextDescription.text?.clear()
-        binding.radioGroupClass.clearCheck()
-        binding.switchFavorite.isChecked = false
-        binding.radioGroupClassificationRestricted.clearCheck()
-        binding.radioGroupClassificationSecret.clearCheck()
-    }
-
     private fun setupObservers() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
-            binding.editTextNumber.setText(
-                if (state.number == 0) "" else state.number.toString()
-            )
-            binding.editTextAlias.setText(state.alias)
-            binding.editTextDescription.setText(state.description)
+            updateUI(state)
+
+            siteSelectorAdapter.submitList(state.availableSites)
 
             state.mensaje?.let { mensaje ->
                 Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_SHORT).show()
                 viewModel.limpiarMensaje()
             }
+
+            if (state.cerrar) {
+                findNavController().navigateUp()
+            }
         }
     }
 
+    private fun updateUI(state: EditarScpState) {
+        val scp = state.scp
+
+        binding.editTextNumber.setText(scp.item.toString())
+        binding.editTextAlias.setText(scp.nombre)
+        binding.editTextDescription.setText(scp.description)
+
+
+        when (scp.clase) {
+            Clase.SAFE -> binding.radioGroupClass.check(R.id.radioButtonSafe)
+            Clase.EUCLID -> binding.radioGroupClass.check(R.id.radioButtonEuclid)
+            Clase.KETER -> binding.radioGroupClass.check(R.id.radioButtonKeter)
+        }
+
+
+        binding.switchFavorite.isChecked = scp.favorite
+
+
+        when (scp.classification) {
+            Classification.UNRESTRICTED ->
+                binding.radioGroupClassificationRestricted.check(R.id.radioButtonUnrestricted)
+            Classification.RESTRICTED ->
+                binding.radioGroupClassificationRestricted.check(R.id.radioButtonRestricted)
+            Classification.CONFIDENTIAL ->
+                binding.radioGroupClassificationRestricted.check(R.id.radioButtonConfidential)
+            Classification.SECRET ->
+                binding.radioGroupClassificationSecret.check(R.id.radioButtonSecret)
+            Classification.TOP_SECRET ->
+                binding.radioGroupClassificationSecret.check(R.id.radioButtonTopSecret)
+        }
+
+
+    }
+
     private fun setupListeners() {
-        binding.buttonGuardar.setOnClickListener {
+        binding.buttonActualizar.setOnClickListener {
             val scp = buildScpFromInputs()
             viewModel.guardar(scp)
+            findNavController().navigateUp()
+        }
+
+        binding.buttonBorrar.setOnClickListener {
+            viewModel.borrar()
             findNavController().navigateUp()
         }
 
@@ -130,7 +186,6 @@ class FragmentAdd : Fragment() {
                 else -> Classification.UNRESTRICTED
             }
         }
-
 
         return Scp(
             item = item,
