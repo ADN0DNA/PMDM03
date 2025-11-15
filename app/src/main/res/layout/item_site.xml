@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_small"
+    app:cardElevation="@dimen/size_small"
+    app:cardCornerRadius="@dimen/size_small">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_large">
+
+    <TextView
+        android:id="@+id/textViewSiteCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textViewLocation"
+        app:layout_constraintEnd_toStartOf="@id/textViewSecurityLevel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Site-19" />
+
+    <TextView
+        android:id="@+id/textViewSecurityLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textStyle="bold"
+        android:textColor="@color/teal_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewSiteCode"
+        app:layout_constraintTop_toTopOf="@+id/textViewSiteCode"
+        tools:text="Level 5" />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textColor="@color/teal_dark"
+        app:layout_constraintEnd_toEndOf="@+id/textViewSiteCode"
+        app:layout_constraintStart_toStartOf="@+id/textViewSiteCode"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSiteCode"
+        tools:text="Classified Location" />
+
+    <TextView
+        android:id="@+id/textViewDirector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_paragraph"
+        android:textColor="@color/teal_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewLocation"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
+        tools:text="Director: Dr. Johnson" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+

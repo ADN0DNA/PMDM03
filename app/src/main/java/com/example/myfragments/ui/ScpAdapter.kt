@@ -5,12 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.myfragments.R
-
-import com.example.myfragments.domain.modelo.Scp
+import com.example.myfragments.data.local.entity.ScpWithSites
 
 class ScpAdapter(
-    private val itemClick: (Scp) -> Unit
-) : ListAdapter<Scp, ScpItemViewHolder>(DiffCallback()) {
+    private val itemClick: (Int) -> Unit
+) : ListAdapter<ScpWithSites, ScpItemViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScpItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_scp, parent, false)
@@ -21,8 +20,11 @@ class ScpAdapter(
         holder.bind(getItem(position), itemClick)
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<Scp>() {
-        override fun areItemsTheSame(oldItem: Scp, newItem: Scp): Boolean = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: Scp, newItem: Scp): Boolean = oldItem == newItem
+    class DiffCallback : DiffUtil.ItemCallback<ScpWithSites>() {
+        override fun areItemsTheSame(oldItem: ScpWithSites, newItem: ScpWithSites): Boolean =
+            oldItem.scp.id == newItem.scp.id
+
+        override fun areContentsTheSame(oldItem: ScpWithSites, newItem: ScpWithSites): Boolean =
+            oldItem == newItem
     }
 }

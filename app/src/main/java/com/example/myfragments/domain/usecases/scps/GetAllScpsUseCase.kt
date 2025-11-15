@@ -6,7 +6,7 @@ import com.example.myfragments.domain.modelo.Scp
 import javax.inject.Inject
 
 class GetAllScpsUseCase @Inject constructor(private val repo: RepositorioScps) {
-    operator fun invoke(): List<Scp> {
-        return repo.getAll()
+    operator suspend fun invoke(): List<Scp> {
+        return repo.getScps()
     }
 }

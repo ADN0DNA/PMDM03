@@ -1,37 +1,41 @@
 package com.example.myfragments.data
 
-import com.example.myfragments.domain.modelo.Clase
-import com.example.myfragments.domain.modelo.Classification
+import com.example.myfragments.data.local.dao.ScpsDao
+import com.example.myfragments.data.local.entity.toScp
+import com.example.myfragments.data.local.entity.toScpEntity
 import com.example.myfragments.domain.modelo.Scp
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RepositorioScps @Inject constructor() {
+class RepositorioScps @Inject constructor(private val scpDao: ScpsDao) {
 
-    private val scps = mutableListOf<Scp>()
+    suspend fun getScps(): List<Scp> = scpDao.getAllScps().map { it.toScp() }
 
-    init {
-        scps.add(Scp(1, 173, "La estatua", Clase.EUCLID, true, Classification.RESTRICTED, "El primer SCP"))
+    suspend fun getScp(id: Int): Scp? = scpDao.getScpById(id)?.toScp()
+
+    suspend fun addScp(scp: Scp): Scp {
+        val entity = scp.toScpEntity()
+        val newId = scpDao.insertScp(entity)
+        return scp.copy(id = newId.toInt())
     }
 
-    fun getScp(id: Int): Scp? = scps.find { it.id == id }?.copy()
-
-    fun addScp(scp: Scp): Scp {
-        val newId = (scps.maxOfOrNull { it.id } ?: 0) + 1
-        val newScp = scp.copy(newId)
-        scps.add(newScp)
-        return newScp
+    suspend fun updateScp(id: Int, newScp: Scp): Boolean {
+        return try {
+            val entity = newScp.copy(id = id).toScpEntity()
+            scpDao.updateScp(entity)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
-    fun updateScp(id: Int, newScp: Scp): Boolean {
-        val indice = scps.indexOfFirst { it.id == id }
-        if (indice == -1) return false
-        scps[indice] = newScp.copy(id = id)
-        return true
+    suspend fun borrar(id: Int): Boolean {
+        return try {
+            scpDao.deleteScpById(id)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
-
-    fun borrar(id: Int): Boolean = scps.removeIf { it.id == id }
-
-    fun getAll(): List<Scp> = scps.map { it.copy() }
 }

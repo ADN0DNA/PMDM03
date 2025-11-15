@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.example.myfragments.ui.main.ListFragment"
+        android:name="com.example.myfragments.ui.scps.ListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentEditar"
-        android:name="com.example.myfragments.ui.editar.FragmentEditar"
+        android:name="com.example.myfragments.ui.scps.editar.FragmentScpsEditar"
         android:label="fragment_editar"
         tools:layout="@layout/fragment_editar" >
         <argument
@@ -29,7 +29,34 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAdd"
-        android:name="com.example.myfragments.ui.add.FragmentAdd"
+        android:name="com.example.myfragments.ui.scps.add.FragmentScpsAdd"
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/sitesListFragment"
+        android:name="com.example.myfragments.ui.sites.SitesListFragment"
+        android:label="fragment_sites_list"
+        tools:layout="@layout/fragment_sites_list" >
+        <action
+            android:id="@+id/action_sitesListFragment_to_fragmentSitesEditar"
+            app:destination="@id/fragmentSitesEditar" />
+        <action
+            android:id="@+id/action_sitesListFragment_to_fragmentSitesAdd"
+            app:destination="@id/fragmentSitesAdd" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSitesAdd"
+        android:name="com.example.myfragments.ui.sites.add.FragmentSitesAdd"
+        android:label="fragment_sites_add"
+        tools:layout="@layout/fragment_sites_add" />
+    <fragment
+        android:id="@+id/fragmentSitesEditar"
+        android:name="com.example.myfragments.ui.sites.editar.FragmentSitesEditar"
+        android:label="fragment_sites_editar"
+        tools:layout="@layout/fragment_sites_editar" >
+        <argument
+            android:name="siteId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>
