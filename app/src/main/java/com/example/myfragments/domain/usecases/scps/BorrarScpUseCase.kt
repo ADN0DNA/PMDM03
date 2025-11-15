@@ -6,7 +6,7 @@ import javax.inject.Inject
 class BorrarScpUseCase @Inject constructor(
     private val repo: RepositorioScps
 ) {
-    operator fun invoke(id: Int): Boolean {
+    suspend operator fun invoke(id: Int): Boolean {
         return repo.borrar(id)
     }
 }
