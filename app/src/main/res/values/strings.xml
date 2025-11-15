@@ -28,4 +28,12 @@
     <string name="editar">Editar</string>
     <string name="lista">Lista</string>
     <string name="add">Add</string>
+    <string name="scps">SCPs</string>
+    <string name="sites">Sites</string>
+    <string name="site_data">SITE DATA</string>
+    <string name="site_code">Site Code</string>
+    <string name="location">Location</string>
+    <string name="security_level">Security Level</string>
+    <string name="director">Director</string>
+    <string name="associated_sites">Associated Sites</string>
 </resources>

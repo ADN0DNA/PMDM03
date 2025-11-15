@@ -7,7 +7,7 @@ import javax.inject.Inject
 class UpdateScpUseCase @Inject constructor(
     private val repo: RepositorioScps
 ) {
-    operator fun invoke(id: Int, scp: Scp): Boolean {
+    suspend operator fun invoke(id: Int, scp: Scp): Boolean {
         return repo.updateScp(id, scp)
     }
 }

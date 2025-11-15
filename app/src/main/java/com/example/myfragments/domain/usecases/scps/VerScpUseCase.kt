@@ -7,5 +7,5 @@ import javax.inject.Inject
 class VerScpUseCase @Inject constructor(
     private val repo: RepositorioScps
 ) {
-    operator fun invoke(id: Int): Scp = repo.getScp(id) ?: Scp()
+    operator suspend fun invoke(id: Int): Scp = repo.getScp(id) ?: Scp()
 }
